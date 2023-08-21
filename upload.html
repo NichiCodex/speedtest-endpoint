@@ -1,28 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title></title>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.body.addEventListener('drop', handleDrop, false);
-            document.body.addEventListener('dragover', handleDragOver, false);
-        });
-
-        function handleDrop(e) {
-            e.preventDefault();
-
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                const file = files[0];
-                console.log('File diterima:', file.name);
-            }
-        }
-
-        function handleDragOver(e) {
-            e.preventDefault();
-        }
-    </script>
 </head>
 <body>
+    <script>
+        // Menangkap file yang di-POST ke halaman ini
+        window.addEventListener('DOMContentLoaded', (event) => {
+            const urlSearchParams = new URLSearchParams(window.location.search);
+            const formData = new FormData();
+            
+            // Loop melalui parameter URL dan tambahkan semua file ke FormData
+            for (const [key, value] of urlSearchParams) {
+                formData.append(key, value);
+            }
+
+            // Kirim FormData ke server atau lakukan tindakan lain sesuai kebutuhan Anda
+            // Contoh: fetch('https://server-anda.com/upload', {
+            //     method: 'POST',
+            //     body: formData
+            // }).then(response => {
+            //     console.log('File berhasil di-POST.');
+            // }).catch(error => {
+            //     console.error('Terjadi kesalahan:', error);
+            // });
+        });
+    </script>
 </body>
 </html>
