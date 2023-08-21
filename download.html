@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <script>
+        // Ambil ukuran file dari parameter GET "size"
+        var size = parseInt(getParameterByName('size')) || 1024; // Ukuran default adalah 1 KB
+
+        // Buat data file palsu
+        var fakeData = new Uint8Array(size);
+
+        // Buat objek Blob dari data palsu
+        var blob = new Blob([fakeData], { type: 'application/octet-stream' });
+
+        // Buat URL dari Blob
+        var url = window.URL.createObjectURL(blob);
+
+        // Buat elemen anchor untuk mengunduh file
+        var a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = 'fakefile.txt'; // Nama file yang akan diunduh
+        document.body.appendChild(a);
+
+        // Klik elemen anchor untuk memulai unduhan
+        a.click();
+
+        // Hapus elemen anchor setelah selesai
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+
+        // Fungsi untuk mendapatkan nilai parameter GET dari URL
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+    </script>
+</body>
+</html>
